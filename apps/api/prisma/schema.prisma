@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  servers   Server[] @relation("ServerOwner")
+  memberships ServerMember[]
+  messages  Message[]
+}
+
+model Server {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String
+  owner     User     @relation("ServerOwner", fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  members   ServerMember[]
+  channels  Channel[]
+  roles     Role[]
+}
+
+model ServerMember {
+  id        String   @id @default(cuid())
+  userId    String
+  serverId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  server    Server   @relation(fields: [serverId], references: [id])
+  roles     MemberRole[]
+
+  @@unique([userId, serverId])
+}
+
+model Channel {
+  id        String   @id @default(cuid())
+  name      String
+  serverId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  server    Server   @relation(fields: [serverId], references: [id])
+  messages  Message[]
+  overrides ChannelPermissionOverride[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  content    String
+  authorId   String
+  channelId  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  editedAt   DateTime?
+  deletedAt  DateTime?
+  author     User     @relation(fields: [authorId], references: [id])
+  channel    Channel  @relation(fields: [channelId], references: [id])
+
+  @@index([channelId, createdAt])
+}
+
+model Role {
+  id        String   @id @default(cuid())
+  name      String
+  serverId  String
+  permissions Int
+  server    Server   @relation(fields: [serverId], references: [id])
+  members   MemberRole[]
+  overrides ChannelPermissionOverride[]
+}
+
+model MemberRole {
+  id        String   @id @default(cuid())
+  memberId  String
+  roleId    String
+  member    ServerMember @relation(fields: [memberId], references: [id])
+  role      Role    @relation(fields: [roleId], references: [id])
+
+  @@unique([memberId, roleId])
+}
+
+model ChannelPermissionOverride {
+  id        String   @id @default(cuid())
+  channelId String
+  roleId    String
+  allowBits Int      @default(0)
+  denyBits  Int      @default(0)
+  channel   Channel  @relation(fields: [channelId], references: [id])
+  role      Role     @relation(fields: [roleId], references: [id])
+
+  @@unique([channelId, roleId])
+}

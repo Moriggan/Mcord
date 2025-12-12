@@ -1,0 +1,10 @@
+node_modules
+pnpm-lock.yaml
+.env
+apps/**/.env
+apps/**/dist
+apps/**/build
+apps/**/.turbo
+.DS_Store
+coverage
+.prisma
