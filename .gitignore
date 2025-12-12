@@ -4,6 +4,7 @@ pnpm-lock.yaml
 apps/**/.env
 apps/**/dist
 apps/**/build
+apps/**/release
 apps/**/.turbo
 .DS_Store
 coverage

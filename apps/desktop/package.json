@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "concurrently -k \"vite dev --host\" \"wait-on http://localhost:5173 && electron .\"",
     "build": "vite build",
+    "package:win": "electron-builder --config electron-builder.config.js --projectDir . --win --publish never",
     "lint": "eslint src --ext .tsx,.ts",
     "test": "echo 'no tests yet'"
   },
@@ -24,6 +25,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
+    "electron-builder": "^24.13.3",
     "eslint-plugin-react": "^7.33.2",
     "typescript": "^5.3.3",
     "vite": "^5.1.0",

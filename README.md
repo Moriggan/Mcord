@@ -34,6 +34,39 @@ Discord-like MVP with NestJS + Prisma API and Electron + React desktop client. B
    pnpm dev
    ```
 
+## Distribute to friends (two parts)
+There are two deliverables when you want others to use Mcord:
+
+1. **User installer (.exe) for Windows** – so friends can install the desktop client.
+2. **Server runtime** – so you (or a host) can run the API + database that everyone connects to.
+
+### 1) Build a Windows installer (.exe)
+- Install Windows build tools (Visual Studio Build Tools or `windows-build-tools`), then run these from the repo root:
+  ```bash
+  pnpm install
+  pnpm --filter desktop build
+  pnpm --filter desktop package:win
+  ```
+- Output: `apps/desktop/release/Mcord-Setup-<version>.exe`. Share this file with users; the installer lets them choose an install folder.
+- Configure the client to point at your server by editing `apps/desktop/.env` (or the built-in env before packaging) to set `VITE_API_URL` to your public API URL (e.g., `https://chat.yourdomain.com`).
+
+### 2) Run the server for public access
+- Choose where to host: a Windows or Linux box works. Ensure ports 3001 (API) and 6379/5432 (or mapped equivalents) are reachable or behind a reverse proxy.
+- Steps on the host:
+  ```bash
+  git clone <this repo>
+  cd Mcord
+  cp apps/api/.env.example apps/api/.env   # set strong JWT secret & DB creds
+  docker-compose up -d                    # launches Postgres + Redis
+  pnpm install
+  pnpm db:migrate
+  pnpm --filter api prisma:generate
+  pnpm --filter api seed                  # optional demo user/roles
+  pnpm --filter api start:dev             # or build a prod NestJS bundle
+  ```
+- Harden before going public: use HTTPS (reverse proxy like Nginx/Caddy), set firewall rules, enable rate limiting, rotate secrets, and back up Postgres/Redis regularly.
+- After the server is reachable, rebuild the installer (or share a `.env` file) with `VITE_API_URL` pointing to the public host so the client connects correctly.
+
 ## API quick reference
 Key REST endpoints:
 - `POST /auth/register {email, username, password}`
