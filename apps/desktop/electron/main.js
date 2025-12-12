@@ -2,6 +2,7 @@ const { app, BrowserWindow, nativeTheme } = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
+const isDev = process.env.NODE_ENV !== 'production';
 const devUrl = 'http://localhost:5173';
 
 function createWindow() {
@@ -18,6 +19,7 @@ function createWindow() {
   } else {
     const indexPath = path.join(__dirname, '../dist/index.html');
     win.loadFile(indexPath);
+    win.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 }
 
