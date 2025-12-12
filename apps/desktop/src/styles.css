@@ -1,0 +1,153 @@
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #e8e8e8;
+  background: #1e1f22;
+}
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 180px 200px 1fr 200px;
+  height: 100vh;
+  background: #2b2d31;
+  color: #fff;
+}
+
+.auth {
+  margin: auto;
+  width: 320px;
+  padding: 24px;
+  background: #313338;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth input {
+  padding: 8px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background: #1e1f22;
+  color: #fff;
+}
+
+.auth button {
+  padding: 10px;
+  background: #5865f2;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.toggle {
+  cursor: pointer;
+  color: #9ea0a6;
+}
+
+.servers, .channels, .presence {
+  padding: 12px;
+  background: #1e1f22;
+  overflow: auto;
+}
+
+.servers button {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px;
+  background: #2b2d31;
+  color: white;
+  border: 1px solid #3b3d44;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.servers button.active, .channels .active {
+  background: #5865f2;
+}
+
+.channels div {
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  background: #2b2d31;
+  border-left: 1px solid #3b3d44;
+  border-right: 1px solid #3b3d44;
+}
+
+header {
+  padding: 10px;
+  border-bottom: 1px solid #3b3d44;
+  display: flex;
+  justify-content: space-between;
+}
+
+.messages {
+  flex: 1;
+  overflow: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+}
+
+.message {
+  padding: 10px;
+  background: #1e1f22;
+  border-radius: 6px;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #9ea0a6;
+}
+
+.content {
+  margin-top: 4px;
+}
+
+footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #3b3d44;
+}
+
+footer input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #3b3d44;
+  background: #1e1f22;
+  color: white;
+}
+
+footer button {
+  padding: 10px 16px;
+  background: #5865f2;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+.typing {
+  color: #9ea0a6;
+}
+
+.error {
+  color: #f87171;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "mcord",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@8.15.8",
+  "scripts": {
+    "dev": "concurrently -k \"pnpm --filter api start:dev\" \"pnpm --filter desktop dev\"",
+    "db:migrate": "pnpm --filter api prisma:migrate",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
