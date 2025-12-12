@@ -1,0 +1,36 @@
+{
+  "name": "desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite dev --host\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "vite build",
+    "package:win": "electron-builder --config electron-builder.config.js --projectDir . --win --publish never",
+    "lint": "eslint src --ext .tsx,.ts",
+    "test": "echo 'no tests yet'"
+  },
+  "dependencies": {
+    "@mcord/shared": "workspace:*",
+    "axios": "^1.6.7",
+    "electron": "^27.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "socket.io-client": "^4.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "electron-builder": "^24.13.3",
+    "eslint-plugin-react": "^7.33.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0",
+    "wait-on": "^7.2.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "@typescript-eslint/eslint-plugin": "^6.20.0"
+  }
+}
