@@ -66,3 +66,8 @@ Electron preload saves the JWT token to a local file `.mcord-token`. Replace wit
 - `PermissionsService` centralizes effective permission calculation with per-channel overrides.
 - Server creation seeds @everyone/Admin/Member roles and a `#general` channel.
 - Desktop client consumes REST + WebSocket API and shows login/register, servers, channels, chat with typing indicator and presence list.
+
+## Windows 10/11 compatibility & public use
+- **Local development on Windows**: Works on Windows 10/11 with Node 18+ and pnpm. Use Docker Desktop for Postgres/Redis; Electron/Vite run natively. If you prefer WSL2, ensure Docker is exposed to WSL and forward ports 3001/5173.
+- **Building distributables**: Electron packaging for Windows is supported; install required Windows build tools (`windows-build-tools` or Visual Studio Build Tools) before running bundling commands.
+- **Public/production readiness**: This is an MVP. Before exposing publicly, add HTTPS termination, strong JWT secrets in env, CORS/CSRF limits, rate limiting, per-user logging/monitoring, production token storage (swap `.mcord-token` for keytar or OS credential vault), and a backup/rotation plan for Postgres/Redis.
